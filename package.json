@@ -16,6 +16,6 @@
         "vue": "^3.2.37"
     },
     "dependencies": {
-        "@ssense/vue-carousel": "^0.6.5"
+        "vueperslides": "^3.5.1"
     }
 }

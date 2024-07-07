@@ -1,9 +1,20 @@
 <script setup>
+import {computed} from "vue";
+
 const props = defineProps({
     product:{
         required:true,
         type:Object
     }
+})
+const formattedPhases = computed(()=>{
+    const phases = JSON.parse(props.product.phases_dates);
+    const formatted = {};
+    for (const key in phases) {
+        const [year, month, day] = phases[key].split("-");
+        formatted[key] = `${day}/${month}/${year}`;
+    }
+    return formatted;
 })
 </script>
 
@@ -11,12 +22,10 @@ const props = defineProps({
     <div class="product-card">
         <img :src="product.image" alt="Product Image" class="product-image" />
         <div class="product-info">
-            <span class="tag">{{ product.tag }}</span>
-            <h2 class="product-title">{{ product.title }}</h2>
-            <span class="phase">{{ product.phase }}</span>
-            <p class="price">{{ product.price }}</p>
+            <h2 class="product-title">{{ product.name }}</h2>
+            <p class="price">{{ product.price_range }}</p>
             <div class="dates">
-                <p v-for="date in product.dates" :key="date.phase">{{ date.phase }} - {{ date.date }}</p>
+                <p v-for="(key,date) in formattedPhases" :key="key">{{ key }} - {{ date }}</p>
             </div>
             <p class="description">{{ product.description }}</p>
             <button class="book-button">BOOK CABIN</button>
@@ -42,29 +51,11 @@ const props = defineProps({
     text-align: center;
 }
 
-.tag {
-    background-color: #ff007f;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    position: absolute;
-    top: 16px;
-    left: 16px;
-}
 
 .product-title {
     font-size: 18px;
     color: #ff007f;
     margin-top: 16px;
-}
-
-.phase {
-    background-color: #ff007f;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
 }
 
 .price {

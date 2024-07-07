@@ -1,7 +1,8 @@
 <script setup>
+import { ref } from 'vue';
 import Category from "./Category.vue";
 
-let selectedIndex = 0
+
 
 const props =defineProps({
     categories: {
@@ -9,16 +10,18 @@ const props =defineProps({
         required: true
     }
 })
-
+const selectedIndex = ref(0);
 function selectCategory(index) {
-    selectedIndex = index;
+    selectedIndex.value = index;
 }
 </script>
 
 <template>
     <div class="expect-on-board" v-if="categories.length">
-        <h1>WHAT TO EXPECT ON BOARD</h1>
-        <button class="book-button">BOOK A CABIN</button>
+        <div class="header-container">
+            <h1>WHAT TO EXPECT ON BOARD</h1>
+            <button class="book-button">BOOK A CABIN</button>
+        </div>
         <div class="categories-nav">
             <button
                 v-for="(category, index) in categories"
@@ -29,7 +32,9 @@ function selectCategory(index) {
                 {{ category.name }}
             </button>
         </div>
-        <Category :category="categories[selectedIndex]" />
+        <div v-for="(category, index) in categories" :key="index">
+            <Category v-show="selectedIndex === index" :category="category" />
+        </div>
     </div>
 </template>
 
@@ -38,14 +43,30 @@ function selectCategory(index) {
     text-align: center;
     position: absolute;
     top: 460%;
+    margin: 20px;
+}
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
+.header-container h1 {
+    margin: 0;
+    color: #FF00B7;
+;
+}
+
+.header-container .book-button {
+    margin-left: 20px;
+}
 .book-button {
     background-color: #007bff;
     color: white;
+    padding: 8px 16px;
     border: none;
-    padding: 10px 20px;
-    margin: 10px;
+    border-radius: 4px;
     cursor: pointer;
 }
 

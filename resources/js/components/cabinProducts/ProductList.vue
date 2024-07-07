@@ -1,6 +1,8 @@
 <script setup>
 import ProductCard from "./ProductCard.vue";
 import CabinHeader from "./CabinHeader.vue";
+import { VueperSlides, VueperSlide } from 'vueperslides'
+import 'vueperslides/dist/vueperslides.css'
 
 const props = defineProps({
   products:{
@@ -11,19 +13,25 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="product-list">
+  <div class="product-list container">
     <div class="cabin-header">
       <CabinHeader></CabinHeader>
     </div>
 
   <div class="carousel-wrapper">
-    <carousel :per-page="1">
-      <slide v-for="product in products" :key="product.id">
-        <ProductCard
-            :product="product"
-        />
-      </slide>
-    </carousel>
+
+    <vueper-slides arrows-outside bullets-outside transition-speed="250"
+                   :visible-slides="3"
+                   slide-multiple
+                   >
+      <vueper-slide
+          v-for="product in products"
+          :key="product.product_id">
+          <template #content>
+              <ProductCard :product="product"></ProductCard>
+          </template>
+      </vueper-slide>
+    </vueper-slides>
   </div>
   </div>
 </template>
@@ -32,5 +40,10 @@ const props = defineProps({
 .product-list{
   position: absolute;
   top: 300%;
+    margin-left: 15%;
+    margin-bottom: 10%;
+}
+.carousel-wrapper{
+    margin-left: 7%;
 }
 </style>

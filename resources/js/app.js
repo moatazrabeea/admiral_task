@@ -19,8 +19,10 @@ import 'bootstrap';
 import '../css/app.css';
 import ExampleComponent from './components/ExampleComponent.vue';
 import LandingPage from "./components/LandingPage.vue";
+
 app.component('example-component', ExampleComponent);
 app.component('landing-page',LandingPage)
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
